@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+
+  justify-content: center;
+
+  padding: 0.25rem;
+
+  background-color: aquamarine;
+}
+
+button {
+  padding: 0.25rem 0.5rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+
+  background-color: antiquewhite;
+
+  justify-items: center;
+}
+
+.list-edit {
+  padding: 1rem;
+}
+
+.book-container {
+  justify-items: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.book-item {
+  justify-items: center;
+  margin: .25rem;
+
+  min-width: 100px;
+  max-width: 250px;
+
+  border: .125rem solid black;
+}
