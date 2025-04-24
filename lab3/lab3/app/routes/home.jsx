@@ -1,0 +1,108 @@
+import { useContext, useEffect, useState } from "react";
+
+import BookListItem from "../components/BookListItem";
+import FilterList from "../components/FilterList"
+import { BookListContext } from "../contexts/BookListContext";
+
+export function meta() {
+  return [
+    { title: "Library App" },
+    { name: "description", content: "Welcome to library app!" },
+  ];
+};
+
+export default function Home() {
+  const { bookList, setBookList } = useContext(BookListContext);
+  const [query, setQuery] = useState({
+    author: "",
+    priceMin: 0.00,
+    priceMax: 110.00,
+    hardCover: false,
+    pageCountMin: 0,
+    pageCountMax: Number.MAX_VALUE,
+    descriptionWord: ""
+  });
+
+  const filterAuthor = (ev) => {
+    setQuery(prev => ({
+      ...prev,
+      author: ev.target.value
+    }));
+  };
+
+  const filterPriceMin = (ev) => {
+    setQuery(prev => ({
+      ...prev,
+      priceMin: Number(ev.target.value)
+    }));
+  };
+
+  const filterPriceMax = (ev) => {
+    const newPrice = Number(ev.target.value) === 0? 
+      Number.MAX_SAFE_INTEGER :
+      Number(ev.target.value);
+
+    setQuery(prev => ({
+      ...prev,
+      priceMax: newPrice
+    }));
+  };
+
+  const filterHardCover = (ev) => {
+    setQuery(prev => ({
+      ...prev,
+      hardCover: ev.target.value
+    }));
+  };
+
+  const filterPageCountMin = (ev) => {
+    setQuery(prev => ({
+      ...prev,
+      pageCountMin: Number(ev.target.value)
+    }));
+  };
+
+  const filterPageCountMax = (ev) => {
+    const newPage = Number(ev.target.value) === 0? 
+      Number.MAX_SAFE_INTEGER :
+      Number(ev.target.value);
+    
+    setQuery(prev => ({
+      ...prev,
+      pageCountMax: newPage
+    }));
+  };
+
+  const filterDescriptionWord = (ev) => {
+    setQuery(prev => ({
+      ...prev,
+      descriptionWord: ev.target.value
+    }));
+  };
+
+  const bookListHTML = bookList
+    .filter((it) => it.author.toLowerCase().includes(query.author))
+    .filter((it) => query.priceMin <= it.price && it.price <= query.priceMax)
+    .filter((it) => query.pageCountMin <= it.pages && it.pages <= query.pageCountMax)
+    .filter((it) => it.description.toLowerCase().includes(query.descriptionWord))
+    .map((it) => <BookListItem key={it.id} book={it} />);
+
+  useEffect(() => {
+    console.log(query);
+  }, [query]);
+
+  return (
+    <main>
+      <FilterList 
+        filterAuthor={filterAuthor}
+        filterHardCover={filterHardCover}
+        filterDescriptionWord={filterDescriptionWord}
+        filterPriceMin={filterPriceMin}
+        filterPriceMax={filterPriceMax}
+        filterPageCountMin={filterPageCountMin}
+        filterPageCountMax={filterPageCountMax}
+      />
+      {bookListHTML}
+    </main>
+  );
+};
