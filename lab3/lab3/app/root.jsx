@@ -34,7 +34,7 @@ export function Layout({ children }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex flex-col p-8 gap-4">
         <NavBar />
         <main>
           {children}

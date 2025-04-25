@@ -38,7 +38,7 @@ export default function Home() {
   };
 
   const filterPriceMax = (ev) => {
-    const newPrice = Number(ev.target.value) === 0? 
+    const newPrice = Number(ev.target.value) === 0 ?
       Number.MAX_SAFE_INTEGER :
       Number(ev.target.value);
 
@@ -63,10 +63,10 @@ export default function Home() {
   };
 
   const filterPageCountMax = (ev) => {
-    const newPage = Number(ev.target.value) === 0? 
+    const newPage = Number(ev.target.value) === 0 ?
       Number.MAX_SAFE_INTEGER :
       Number(ev.target.value);
-    
+
     setQuery(prev => ({
       ...prev,
       pageCountMax: newPage
@@ -92,17 +92,22 @@ export default function Home() {
   }, [query]);
 
   return (
-    <main>
-      <FilterList 
-        filterAuthor={filterAuthor}
-        filterHardCover={filterHardCover}
-        filterDescriptionWord={filterDescriptionWord}
-        filterPriceMin={filterPriceMin}
-        filterPriceMax={filterPriceMax}
-        filterPageCountMin={filterPageCountMin}
-        filterPageCountMax={filterPageCountMax}
-      />
-      {bookListHTML}
+    <main
+      className="flex flex-col ml-auto mr-auto max-w-[65.5rem]">
+
+      <div
+        className="flex flex-col gap-2 p-4 bg-[#183A37] rounded-4xl" >
+        <FilterList
+          filterAuthor={filterAuthor}
+          filterHardCover={filterHardCover}
+          filterDescriptionWord={filterDescriptionWord}
+          filterPriceMin={filterPriceMin}
+          filterPriceMax={filterPriceMax}
+          filterPageCountMin={filterPageCountMin}
+          filterPageCountMax={filterPageCountMax}
+        />
+        {bookListHTML}
+      </div>
     </main>
   );
 };
