@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import { NavLink } from "react-router";
 import { BookListContext } from "../contexts/BookListContext";
+import { addBook } from "../services/BookService";
+import { useUser } from "../services/UserService";
 
 export function meta() {
   return [
@@ -10,6 +12,8 @@ export function meta() {
 };
 
 export default function AddBook() {
+  const user = useUser();
+  
   const { bookList, setBookList } = useContext(BookListContext);
   const [newBook, setNewBook] = useState({
     author: "",
@@ -18,7 +22,9 @@ export default function AddBook() {
     price: 0.00,
     cover: true,
     pages: 0,
-    image: ""
+    image: "",
+
+    uid: user?.uid || "",
   });
 
   const setAuthor = (ev) => {
@@ -65,7 +71,10 @@ export default function AddBook() {
       ...newBook
     };
 
+    console.log("handle: ", user.uid);
+    tempBook.uid = user.uid;
 
+    addBook(tempBook, user)
     setBookList(prev => prev.concat([tempBook]));
   };
 

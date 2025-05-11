@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 
 import BookListItem from "../components/BookListItem";
 import FilterList from "../components/FilterList"
@@ -22,6 +22,38 @@ export default function Home() {
     pageCountMax: Number.MAX_VALUE,
     descriptionWord: ""
   });
+
+  const prevQueryRef = useRef(query);
+
+  useEffect(() => {
+    prevQueryRef.current = query;
+  }, [query]);
+
+  const [prevQuery, setPrevQuery] = useState(null);
+
+  useEffect(() => {
+    setPrevQuery(query);
+  });
+
+  // const prevQuery = useRef(null);
+  // useEffect(() => {
+  //   prevQuery.current = query;
+  // });
+
+  // const [count, setCount] = useState(0);
+  // const [prevCount, setPrevCount] = useState(null); // Using state instead of useRef
+
+  // useEffect(() => {
+  //   setPrevCount(count); // Causes a re-render
+  // }, [count]);
+
+  // const [count, setCount] = useState(0);
+  // const prevCountRef = useRef(null)
+  
+  // useEffect(() => {
+  //   prevCountRef.current = count;
+  //   // console.log("current: ", count, " prev: ", prevCountRef.current);
+  // }, [count]);
 
   const filterAuthor = (ev) => {
     setQuery(prev => ({
@@ -80,21 +112,21 @@ export default function Home() {
     }));
   };
 
-  const bookListHTML = bookList
-    .filter((it) => it.author.toLowerCase().includes(query.author))
-    .filter((it) => query.priceMin <= it.price && it.price <= query.priceMax)
-    .filter((it) => query.pageCountMin <= it.pages && it.pages <= query.pageCountMax)
-    .filter((it) => it.description.toLowerCase().includes(query.descriptionWord))
-    .map((it) => <BookListItem key={it.id} book={it} />);
+  console.log("Component Re-Rendered!");
 
+  const filteredBooksRef = useRef([])
   useEffect(() => {
-    console.log(query);
-  }, [query]);
+    filteredBooksRef.current = bookList
+      .filter((it) => it.author.toLowerCase().includes(query.author))
+      .filter((it) => query.priceMin <= it.price && it.price <= query.priceMax)
+      .filter((it) => query.pageCountMin <= it.pages && it.pages <= query.pageCountMax)
+      .filter((it) => it.description.toLowerCase().includes(query.descriptionWord))
+      .map((it) => <BookListItem key={it.id} book={it} />);
+  }, [bookList]);
 
   return (
     <main
       className="flex flex-col ml-auto mr-auto max-w-[65.5rem]">
-
       <div
         className="flex flex-col gap-2 p-4 bg-[#183A37] rounded-4xl" >
         <FilterList
@@ -106,7 +138,7 @@ export default function Home() {
           filterPageCountMin={filterPageCountMin}
           filterPageCountMax={filterPageCountMax}
         />
-        {bookListHTML}
+        {filteredBooksRef.current}
       </div>
     </main>
   );

@@ -4,4 +4,8 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [reactRouter(), tailwindcss()],
+  build: {
+    outDir: "dist"
+  },
+  base: '/',
 });
