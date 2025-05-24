@@ -47,6 +47,7 @@ export default ({ book }) => {
 
   return (
     <article
+    id="book-list-item"
       className="grid grid-cols-4 gap-4 bg-[#EFD6AC] p-2 rounded-2xl text-[#04151F] items-center" >
       <img
         src={cover}
@@ -59,7 +60,6 @@ export default ({ book }) => {
           <>
             <p>Author: {book.author}</p>
             <p>Price: {book.price}</p>
-            <p>Cover: {book.cover}</p>
             <p>Pages: {book.pages}</p>
           </>
         ) : (

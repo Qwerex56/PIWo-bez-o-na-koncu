@@ -37,28 +37,28 @@ export default function AddBook() {
   const setTitle = (ev) => {
     setNewBook(prev => ({
       ...prev,
-      author: ev.target.value
+      title: ev.target.value
     }));
   };
 
   const setDescription = (ev) => {
     setNewBook(prev => ({
       ...prev,
-      author: ev.target.value
+      description: ev.target.value
     }));
   };
 
   const setPrice = (ev) => {
     setNewBook(prev => ({
       ...prev,
-      author: Number(ev.target.value)
+      price: Number(ev.target.value)
     }));
   };
 
   const setPages = (ev) => {
     setNewBook(prev => ({
       ...prev,
-      author: Number(ev.target.value)
+      pages: Number(ev.target.value)
     }));
   };
 

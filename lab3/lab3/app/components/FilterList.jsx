@@ -30,6 +30,7 @@ export default ({
       <input
         type="text"
         placeholder="Author"
+        id="filter-author"
         onChange={(e) => { filterAuthor(e) }}
         className="bg-[#7A7666] text-black rounded-lg border-[#183A37] border-2"
       />
@@ -63,6 +64,7 @@ export default ({
         <input
           type="number"
           placeholder="Pages min"
+          id="filter-pages-min"
           onChange={(e) => { filterPageCountMin(e) }}
           className="bg-[#7A7666] text-black rounded-lg border-[#183A37] border-2"
         />
@@ -77,6 +79,7 @@ export default ({
       <input
         type="text"
         placeholder="Description"
+        id="filter-description"
         onChange={(e) => { filterDescriptionWord(e) }}
         className="bg-[#7A7666] text-black rounded-lg border-[#183A37] border-2"
       />

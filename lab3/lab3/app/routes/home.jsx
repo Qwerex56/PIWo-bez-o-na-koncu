@@ -27,6 +27,7 @@ export default function Home() {
 
   useEffect(() => {
     prevQueryRef.current = query;
+    console.log(prevQueryRef.current)
   }, [query]);
 
   const [prevQuery, setPrevQuery] = useState(null);
@@ -34,26 +35,6 @@ export default function Home() {
   useEffect(() => {
     setPrevQuery(query);
   });
-
-  // const prevQuery = useRef(null);
-  // useEffect(() => {
-  //   prevQuery.current = query;
-  // });
-
-  // const [count, setCount] = useState(0);
-  // const [prevCount, setPrevCount] = useState(null); // Using state instead of useRef
-
-  // useEffect(() => {
-  //   setPrevCount(count); // Causes a re-render
-  // }, [count]);
-
-  // const [count, setCount] = useState(0);
-  // const prevCountRef = useRef(null)
-  
-  // useEffect(() => {
-  //   prevCountRef.current = count;
-  //   // console.log("current: ", count, " prev: ", prevCountRef.current);
-  // }, [count]);
 
   const filterAuthor = (ev) => {
     setQuery(prev => ({
@@ -114,14 +95,15 @@ export default function Home() {
 
   console.log("Component Re-Rendered!");
 
-  const filteredBooksRef = useRef([])
+  const filteredBooksRef = []
+  filteredBooksRef.current = bookList
+    .filter((it) => it.author.toLowerCase().includes(query.author))
+    .filter((it) => query.priceMin <= it.price && it.price <= query.priceMax)
+    .filter((it) => query.pageCountMin <= it.pages && it.pages <= query.pageCountMax)
+    .filter((it) => it.description.toLowerCase().includes(query.descriptionWord))
+    .map((it) => <BookListItem key={it.id} book={it} />);
+  console.log(filteredBooksRef.current, "books")
   useEffect(() => {
-    filteredBooksRef.current = bookList
-      .filter((it) => it.author.toLowerCase().includes(query.author))
-      .filter((it) => query.priceMin <= it.price && it.price <= query.priceMax)
-      .filter((it) => query.pageCountMin <= it.pages && it.pages <= query.pageCountMax)
-      .filter((it) => it.description.toLowerCase().includes(query.descriptionWord))
-      .map((it) => <BookListItem key={it.id} book={it} />);
   }, [bookList]);
 
   return (
